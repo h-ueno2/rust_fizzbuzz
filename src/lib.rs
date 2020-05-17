@@ -6,9 +6,9 @@ pub struct Manager {
 }
 
 impl Manager {
-    pub fn new(max: u32) -> Manager {
-        let fizz_num = 3;
-        let buzz_num = 5;
+    pub fn new(fizz:u32, buzz:u32, max: u32) -> Manager {
+        let fizz_num = fizz;
+        let buzz_num = buzz;
         let fizz_buzz_num = fizz_num * buzz_num;
         let max = max + 1;
         Manager {
