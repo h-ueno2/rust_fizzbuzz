@@ -16,7 +16,6 @@ impl Manager {
     /// * `max` - FizzBuzzゲームを繰り返し行う最大値
     pub fn new(fizz_num: u32, buzz_num: u32, max: u32) -> Manager {
         let fizz_buzz_num = fizz_num * buzz_num;
-        let max = max + 1;
         Manager {
             fizz_num,
             buzz_num,
@@ -50,7 +49,7 @@ impl Manager {
 
     /// 1からmaxまでの値を対象にFizzBuzzを実行します。
     pub fn run(&self) {
-        for i in 1..self.max {
+        for i in 1..=self.max {
             println!("{}", self.make_answer(i));
         }
     }
