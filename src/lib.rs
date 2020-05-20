@@ -48,10 +48,16 @@ impl Manager {
     }
 
     /// 1からmaxまでの値を対象にFizzBuzzを実行します。
-    pub fn run(&self) {
+    pub fn run(&self) -> String {
+        let mut result = String::from("");
         for i in 1..=self.max {
-            println!("{}", self.make_answer(i));
+            let answer = self.make_answer(i);
+            result = match i {
+                1 => answer,
+                _ => format!("{}\n{}", result, answer),
+            }
         }
+        result
     }
 }
 
@@ -88,5 +94,26 @@ mod make_answer {
         let manager = Manager::new(3, 5, 10);
         assert_eq!(manager.make_answer(2), String::from("2"));
         assert_eq!(manager.make_answer(4), String::from("4"));
+    }
+}
+
+#[cfg(test)]
+mod run {
+    use super::*;
+
+    #[test]
+    fn result() {
+        let manager = Manager::new(3,5,10);
+        let expected = "1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz";
+        assert_eq!(manager.run(), expected);
     }
 }
