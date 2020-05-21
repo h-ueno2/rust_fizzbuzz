@@ -48,6 +48,12 @@ impl Manager {
     }
 
     /// 1からmaxまでの値を対象にFizzBuzzを実行します。
+    /// 
+    /// # Resturn value
+    /// 
+    /// `max`までのFizzBuzzの実行結果を返却します。
+    /// * 値ごとに改行されます。
+    /// 
     pub fn run(&self) -> String {
         let mut result = String::from("");
         for i in 1..=self.max {
