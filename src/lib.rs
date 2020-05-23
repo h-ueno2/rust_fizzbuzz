@@ -49,7 +49,7 @@ impl Manager {
 
     /// 1からmaxまでの値を対象にFizzBuzzを実行します。
     /// 
-    /// # Resturn value
+    /// # Return value
     /// 
     /// `max`までのFizzBuzzの実行結果を返却します。
     /// * 値ごとに改行されます。
