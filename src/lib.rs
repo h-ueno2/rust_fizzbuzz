@@ -1,3 +1,24 @@
+use std::fmt;
+
+#[derive(Debug,PartialEq)]
+pub enum Answer {
+    Fizz,
+    Buzz,
+    FizzBuzz,
+    Number(u32),
+}
+
+impl fmt::Display for Answer {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Answer::Fizz => write!(f, "Fizz"),
+            Answer::Buzz => write!(f, "Buzz"),
+            Answer::FizzBuzz => write!(f, "FizzBuzz"),
+            Answer::Number(n) => write!(f, "{}", n),
+        }
+    }
+}
+
 /// `Manager`は`FizzBuzz`ゲームを管理します。
 pub struct Manager {
     fizz_num: u32,
@@ -38,12 +59,12 @@ impl Manager {
     /// * `buzz_num`で割り切れる数字であった場合は`Buzz`を返却します。
     /// * `fizz_num`及び`buzz_num`の両方で割り切れる値であった場合は`FizzBuzz`を返却します。
     /// * 上記以外の値で割り切れる値であった場合は`num`を返却します。
-    pub fn make_answer(&self, num: u32) -> String {
+    pub fn make_answer(&self, num: u32) -> Answer {
         match num {
-            num if num % self.fizz_buzz_num == 0 => String::from("FizzBuzz"),
-            num if num % self.fizz_num == 0 => String::from("Fizz"),
-            num if num % self.buzz_num == 0 => String::from("Buzz"),
-            _ => num.to_string(),
+            num if num % self.fizz_buzz_num == 0 => Answer::FizzBuzz,
+            num if num % self.fizz_num == 0 => Answer::Fizz,
+            num if num % self.buzz_num == 0 => Answer::Buzz,
+            _ => Answer::Number(num),
         }
     }
 
@@ -59,7 +80,7 @@ impl Manager {
         for i in 1..=self.max {
             let answer = self.make_answer(i);
             result = match i {
-                1 => answer,
+                1 => format!("{}", answer),
                 _ => format!("{}\n{}", result, answer),
             }
         }
@@ -74,7 +95,7 @@ mod make_answer {
     #[test]
     fn return_fizz() {
         let manager = Manager::new(3, 5, 10);
-        let expected = String::from("Fizz");
+        let expected = Answer::Fizz;
         assert_eq!(manager.make_answer(3), expected);
         assert_eq!(manager.make_answer(6), expected);
     }
@@ -82,7 +103,7 @@ mod make_answer {
     #[test]
     fn return_buzz() {
         let manager = Manager::new(3, 5, 10);
-        let expected = String::from("Buzz");
+        let expected = Answer::Buzz;
         assert_eq!(manager.make_answer(5), expected);
         assert_eq!(manager.make_answer(10), expected);
     }
@@ -90,7 +111,7 @@ mod make_answer {
     #[test]
     fn return_fizz_buzz() {
         let manager = Manager::new(3, 5, 10);
-        let expected = String::from("FizzBuzz");
+        let expected = Answer::FizzBuzz;
         assert_eq!(manager.make_answer(15), expected);
         assert_eq!(manager.make_answer(30), expected);
     }
@@ -98,8 +119,8 @@ mod make_answer {
     #[test]
     fn return_number() {
         let manager = Manager::new(3, 5, 10);
-        assert_eq!(manager.make_answer(2), String::from("2"));
-        assert_eq!(manager.make_answer(4), String::from("4"));
+        assert_eq!(manager.make_answer(2), Answer::Number(2));
+        assert_eq!(manager.make_answer(4), Answer::Number(4));
     }
 }
 
