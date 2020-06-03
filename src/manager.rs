@@ -1,11 +1,11 @@
 
 use super::Answer;
+use super::Rule;
+
 
 /// `Manager`は`FizzBuzz`ゲームを管理します。
 pub struct Manager {
-    fizz_num: u32,
-    buzz_num: u32,
-    fizz_buzz_num: u32,
+    rule: Rule,
     max: u32,
 }
 
@@ -18,11 +18,9 @@ impl Manager {
     /// * `buzz_num` - 値を`Buzz`とするための基準値
     /// * `max` - FizzBuzzゲームを繰り返し行う最大値
     pub fn new(fizz_num: u32, buzz_num: u32, max: u32) -> Manager {
-        let fizz_buzz_num = fizz_num * buzz_num;
+        let rule = Rule::new(fizz_num, buzz_num);
         Manager {
-            fizz_num,
-            buzz_num,
-            fizz_buzz_num,
+            rule,
             max,
         }
     }
@@ -43,9 +41,9 @@ impl Manager {
     /// * 上記以外の値で割り切れる値であった場合は`num`を返却します。
     pub fn make_answer(&self, num: u32) -> Answer {
         match num {
-            num if num % self.fizz_buzz_num == 0 => Answer::FizzBuzz,
-            num if num % self.fizz_num == 0 => Answer::Fizz,
-            num if num % self.buzz_num == 0 => Answer::Buzz,
+            num if num % self.rule.get_fizzbuzz_num() == 0 => Answer::FizzBuzz,
+            num if num % self.rule.get_fizz_num() == 0 => Answer::Fizz,
+            num if num % self.rule.get_buzz_num() == 0 => Answer::Buzz,
             _ => Answer::Number(num),
         }
     }
@@ -112,7 +110,10 @@ mod run {
 
     #[test]
     fn result() {
-        let manager = Manager::new(3,5,10);
+        let manager = Manager {
+            rule: Rule::new(3, 5),
+            max: 10,
+        };
         let expected = "1
 2
 Fizz
