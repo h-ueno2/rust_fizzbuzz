@@ -1,8 +1,9 @@
-
-pub mod manager;
 mod answer;
+mod config;
+mod manager;
 mod rule;
 
-pub use manager::*;
 pub use answer::*;
+pub use config::*;
+pub use manager::*;
 pub use rule::*;
