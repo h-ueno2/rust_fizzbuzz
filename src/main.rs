@@ -7,6 +7,6 @@ use std::env;
 fn main() {
     let args: Vec<String> = env::args().collect();
     let config = Config::new(&args);
-    let result = Manager::new(config.get_fizz(), config.get_buzz(), config.get_max()).run();
+    let result = Manager::new(config).run();
     println!("{}", result);
 }

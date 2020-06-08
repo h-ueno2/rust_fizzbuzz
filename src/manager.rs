@@ -1,7 +1,6 @@
-
 use super::Answer;
+use super::Config;
 use super::Rule;
-
 
 /// `Manager`は`FizzBuzz`ゲームを管理します。
 pub struct Manager {
@@ -17,11 +16,11 @@ impl Manager {
     /// * `fizz_num` - 値を`Fizz`とするための基準値
     /// * `buzz_num` - 値を`Buzz`とするための基準値
     /// * `max` - FizzBuzzゲームを繰り返し行う最大値
-    pub fn new(fizz_num: u32, buzz_num: u32, max: u32) -> Manager {
-        let rule = Rule::new(fizz_num, buzz_num);
+    pub fn new(config: Config) -> Manager {
+        let rule = Rule::new(config.get_fizz(), config.get_buzz());
         Manager {
             rule,
-            max,
+            max: config.get_max(),
         }
     }
 
@@ -49,12 +48,12 @@ impl Manager {
     }
 
     /// 1からmaxまでの値を対象にFizzBuzzを実行します。
-    /// 
+    ///
     /// # Return value
-    /// 
+    ///
     /// `max`までのFizzBuzzの実行結果を返却します。
     /// * 値ごとに改行されます。
-    /// 
+    ///
     pub fn run(&self) -> String {
         let mut result = String::from("");
         for i in 1..=self.max {
@@ -74,7 +73,10 @@ mod make_answer {
 
     #[test]
     fn return_fizz() {
-        let manager = Manager::new(3, 5, 10);
+        let manager = Manager {
+            rule: Rule::new(3, 5),
+            max: 10,
+        };
         let expected = Answer::Fizz;
         assert_eq!(manager.make_answer(3), expected);
         assert_eq!(manager.make_answer(6), expected);
@@ -82,7 +84,10 @@ mod make_answer {
 
     #[test]
     fn return_buzz() {
-        let manager = Manager::new(3, 5, 10);
+        let manager = Manager {
+            rule: Rule::new(3, 5),
+            max: 10,
+        };
         let expected = Answer::Buzz;
         assert_eq!(manager.make_answer(5), expected);
         assert_eq!(manager.make_answer(10), expected);
@@ -90,7 +95,10 @@ mod make_answer {
 
     #[test]
     fn return_fizz_buzz() {
-        let manager = Manager::new(3, 5, 10);
+        let manager = Manager {
+            rule: Rule::new(3, 5),
+            max: 10,
+        };
         let expected = Answer::FizzBuzz;
         assert_eq!(manager.make_answer(15), expected);
         assert_eq!(manager.make_answer(30), expected);
@@ -98,7 +106,10 @@ mod make_answer {
 
     #[test]
     fn return_number() {
-        let manager = Manager::new(3, 5, 10);
+        let manager = Manager {
+            rule: Rule::new(3, 5),
+            max: 10,
+        };
         assert_eq!(manager.make_answer(2), Answer::Number(2));
         assert_eq!(manager.make_answer(4), Answer::Number(4));
     }
