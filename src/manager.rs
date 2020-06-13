@@ -65,6 +65,23 @@ impl Manager {
         }
         result
     }
+
+    /// 1からmaxまでの値を対象にFizzBuzzを実行します。
+    /// 数値毎に回答を判定する度に引数の関数を実行します。
+    /// 
+    /// # Argments
+    /// 
+    /// * `c` - 値を判定後、実行する関数
+    /// 
+    pub fn run_callback<T>(&self, mut c: T)
+    where
+        T: FnMut(Answer),
+    {
+        for i in 1..=self.max {
+            let answer = self.make_answer(i);
+            c(answer)
+        }
+    }
 }
 
 #[cfg(test)]
@@ -136,5 +153,27 @@ Fizz
 Fizz
 Buzz";
         assert_eq!(manager.run(), expected);
+    }
+}
+
+#[cfg(test)]
+mod run_callback {
+    use super::*;
+
+    #[test]
+    fn result() {
+        let manager = Manager {
+            rule: Rule::new(3, 5),
+            max: 3,
+        };
+        let mut result = Vec::<Answer>::with_capacity(3);
+        let func = | answer: Answer | {
+            result.push(answer);
+        };
+        manager.run_callback(func);
+
+        let expected = vec![Answer::Number(1),Answer::Number(2),Answer::Fizz];
+
+        assert_eq!(result, expected);
     }
 }
