@@ -13,8 +13,8 @@ impl Rule {
     ///
     /// * `fizz_num` - 値を`Fizz`とするための基準値
     /// * `buzz_num` - 値を`Buzz`とするための基準値
-    pub fn new(fizz_num: u32, buzz_num: u32) -> Rule {
-        Rule {
+    pub fn new(fizz_num: u32, buzz_num: u32) -> Self {
+        Self {
             fizz_num,
             buzz_num,
         }

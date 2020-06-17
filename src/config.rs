@@ -5,28 +5,28 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Config {
+    pub fn new(args: &[String]) -> Self {
         let default_max = 100;
         let default_fizz = 3;
         let default_buzz = 5;
 
         match args.len() {
-            i if i == 2 => Config {
+            i if i == 2 => Self {
                 max: args[1].parse().unwrap_or_else(|_| default_max),
                 fizz_num: default_fizz,
                 buzz_num: default_buzz,
             },
-            i if i == 3 => Config {
+            i if i == 3 => Self {
                 max: args[1].parse().unwrap_or_else(|_| default_max),
                 fizz_num: args[2].parse().unwrap_or_else(|_| default_fizz),
                 buzz_num: default_buzz,
             },
-            i if i == 4 => Config {
+            i if i == 4 => Self {
                 max: args[1].parse().unwrap_or_else(|_| default_max),
                 fizz_num: args[2].parse().unwrap_or_else(|_| default_fizz),
                 buzz_num: args[3].parse().unwrap_or_else(|_| default_buzz),
             },
-            _ => Config {
+            _ => Self {
                 max: default_max,
                 fizz_num: default_fizz,
                 buzz_num: default_buzz,
